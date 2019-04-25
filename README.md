@@ -31,3 +31,11 @@ We use a standard autotools-based build:
 make
 make install
 ```
+
+## Usage at a Glance
+When using SSIDS, ensure the following environment variables are set:
+```bash
+export OMP_CANCELLATION=TRUE
+export OMP_NESTED=TRUE
+export OMP_PROC_BIND=TRUE
+```
