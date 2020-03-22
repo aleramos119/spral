@@ -1,15 +1,74 @@
-To compile with only multicore CPU support, execute
+## Dependencies
+### METIS
+First, compile the [COIN-OR version of METIS](https://github.com/coin-or-tools/ThirdParty-Metis), e.g.,
+```bash
+git clone git@github.com:coin-or-tools/ThirdParty-Metis.git
+cd ThirdParty-Metis && ./get.Metis
+mkdir build && cd build
+../configure --prefix=${PWD}
+make && make install
+export METISDIR=${PWD}
+```
+
+### hwloc
+Next, ensure the [hardware locality library](https://www.open-mpi.org/projects/hwloc/) is installed on your system.
+For example, on Ubuntu 18.04 LTS, this can be accomplished via
 ```bash
 sudo apt-get install hwloc libhwloc-dev
+```
+
+### BLAS
+A number of BLAS libraries can be used for compilation, including the proprietary [Intel MKL](https://software.intel.com/en-us/mkl).
+One open-source option is [https://www.openblas.net/](OpenBLAS), which can be installed on Ubuntu 18.04 LTS via
+```bash
+sudo apt install libopenblas-dev
+```
+This is the library used throughout the remainder of this guide.
+
+### CUDA (optional)
+If you're installing with [NVIDIA CUDA](https://developer.nvidia.com/cuda-downloads) GPU support, ensure it is installed and that the following environment variables are set:
+```
+export CUDA_HOME="/path/to/cuda"
+export PATH="${PATH}:${CUDA_HOME}/bin"
+export LD_LIBRARY_PATH="${LD_LIBRARY_PATH}:${CUDA_HOME}/lib64"
+export C_INCLUDE_PATH="${CPLUS_INCLUDE_PATH}:${CUDA_HOME}/include"
+export CPLUS_INCLUDE_PATH="${CPLUS_INCLUDE_PATH}:${CUDA_HOME}/include"
+export NVCC_INCLUDE_FLAGS="${NVCC_INCLUDE_FLAGS}:-I${CUDA_HOME}/include"
+```
+
+## Compilation
+### Multicore CPUs Only
+To compile with only multicore CPU support, execute
+```bash
 ./autogen.sh # If compiling from scratch.
-mkdir build && cd build
 CFLAGS=-fPIC CPPFLAGS=-fPIC CXXFLAGS=-fPIC FFLAGS=-fPIC \
-FCFLAGS=-fPIC ../configure --prefix=${PWD}
+   FCFLAGS=-fPIC ./configure --prefix=${PWD} \
+   --with-blas="-lopenblas" --with-lapack="-llapack" \
+   --with-metis="-L${METISDIR}/lib -lcoinmetis" \
+   --with-metis-inc-dir="-I${METISDIR}/include/coin-or/metis"
 make && make install
 ```
+
+### Multicore CPUs and NVIDIA GPUs (optional)
+To compile with only multicore CPU support, execute
+```bash
+./autogen.sh # If compiling from scratch.
+CFLAGS=-fPIC CPPFLAGS=-fPIC CXXFLAGS=-fPIC FFLAGS=-fPIC \
+   FCFLAGS=-fPIC NVCCFLAGS="-shared -Xcompiler -fPIC" \
+   ./configure --prefix=${PWD} \
+   --with-blas="-lopenblas" --with-lapack="-llapack" \
+   --with-metis="-L${METISDIR}/lib -lcoinmetis" \
+   --with-metis-inc-dir="-I${METISDIR}/include/coin-or/metis"
+make && make install
+```
+
+## Usage
 Ensure the following environment variables are set when using the library:
 ```bash
 export OMP_CANCELLATION=TRUE
 export OMP_NESTED=TRUE
 export OMP_PROC_BIND=TRUE
 ```
+
+## Questions
+Post an issue on [https://github.com/lanl-ansi/spral](the LANL ANSI repository GitHub page)!
