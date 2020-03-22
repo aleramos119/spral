@@ -28,7 +28,7 @@ This is the library used throughout the remainder of this guide.
 ### CUDA (optional)
 If you're installing with [NVIDIA CUDA](https://developer.nvidia.com/cuda-downloads) GPU support, ensure it is installed and that the following environment variables are set:
 ```
-export CUDA_HOME="/path/to/cuda"
+export CUDA_HOME="/path/to/cuda" # CHANGE THIS TO YOUR SYSTEM-SPECIFIC PATH!
 export PATH="${PATH}:${CUDA_HOME}/bin"
 export LIBRARY_PATH="${LIBRARY_PATH}:${CUDA_HOME}/lib64"
 export LD_LIBRARY_PATH="${LD_LIBRARY_PATH}:${CUDA_HOME}/lib64"
