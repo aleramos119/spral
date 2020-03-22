@@ -51,7 +51,7 @@ make && make install
 ```
 
 ### Multicore CPUs and NVIDIA GPUs (optional)
-To compile with only multicore CPU support, execute
+To compile with multicore CPU and NVIDIA GPU support, execute
 ```bash
 mkdir build
 ./autogen.sh # If compiling from scratch.
