@@ -19,7 +19,7 @@ sudo apt-get install hwloc libhwloc-dev
 
 ### BLAS
 A number of BLAS libraries can be used for compilation, including the proprietary [Intel MKL](https://software.intel.com/en-us/mkl).
-One open-source option is [https://www.openblas.net/](OpenBLAS), which can be installed on Ubuntu 18.04 LTS via
+One open-source option is [OpenBLAS](https://www.openblas.net), which can be installed on Ubuntu 18.04 LTS via
 ```bash
 sudo apt install libopenblas-dev
 ```
