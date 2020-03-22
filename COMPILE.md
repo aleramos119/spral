@@ -79,4 +79,4 @@ export OMP_PROC_BIND=TRUE
 ```
 
 ## Questions
-Post an issue on [https://github.com/lanl-ansi/spral](the LANL ANSI repository GitHub page)!
+Post an issue on [the LANL ANSI repository GitHub page](https://github.com/lanl-ansi/spral).
