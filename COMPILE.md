@@ -41,9 +41,10 @@ export NVCC_INCLUDE_FLAGS="${NVCC_INCLUDE_FLAGS}:-I${CUDA_HOME}/include"
 ### Multicore CPUs Only
 To compile with only multicore CPU support, execute
 ```bash
+mkdir build
 ./autogen.sh # If compiling from scratch.
 CFLAGS=-fPIC CPPFLAGS=-fPIC CXXFLAGS=-fPIC FFLAGS=-fPIC \
-   FCFLAGS=-fPIC ./configure --prefix=${PWD} \
+   FCFLAGS=-fPIC ./configure --prefix=${PWD}/build \
    --with-blas="-lopenblas" --with-lapack="-llapack" \
    --with-metis="-L${METISDIR}/lib -lcoinmetis" \
    --with-metis-inc-dir="-I${METISDIR}/include/coin-or/metis"
