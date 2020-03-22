@@ -30,6 +30,7 @@ If you're installing with [NVIDIA CUDA](https://developer.nvidia.com/cuda-downlo
 ```
 export CUDA_HOME="/path/to/cuda"
 export PATH="${PATH}:${CUDA_HOME}/bin"
+export LIBRARY_PATH="${LIBRARY_PATH}:${CUDA_HOME}/lib64"
 export LD_LIBRARY_PATH="${LD_LIBRARY_PATH}:${CUDA_HOME}/lib64"
 export C_INCLUDE_PATH="${CPLUS_INCLUDE_PATH}:${CUDA_HOME}/include"
 export CPLUS_INCLUDE_PATH="${CPLUS_INCLUDE_PATH}:${CUDA_HOME}/include"
@@ -52,18 +53,25 @@ make && make install
 ### Multicore CPUs and NVIDIA GPUs (optional)
 To compile with only multicore CPU support, execute
 ```bash
+mkdir build
 ./autogen.sh # If compiling from scratch.
 CFLAGS=-fPIC CPPFLAGS=-fPIC CXXFLAGS=-fPIC FFLAGS=-fPIC \
    FCFLAGS=-fPIC NVCCFLAGS="-shared -Xcompiler -fPIC" \
-   ./configure --prefix=${PWD} \
+   ./configure --prefix=${PWD}/build \
    --with-blas="-lopenblas" --with-lapack="-llapack" \
    --with-metis="-L${METISDIR}/lib -lcoinmetis" \
    --with-metis-inc-dir="-I${METISDIR}/include/coin-or/metis"
 make && make install
 ```
+If your GPUs are not being recognized, consider uncommenting line 91 and commenting line 92 of `src/hw_topology/hwloc_wrapper.hxx`, then recompiling.
+The methods for recognizing GPUs do not seem to function independently of the type of system being used.
 
 ## Usage
-Ensure the following environment variables are set when using the library:
+For future use, set the SPRAL directory environment variable via
+```bash
+export SPRALDIR=${PWD}/build
+```
+Also, ensure the following environment variables are set when using the library:
 ```bash
 export OMP_CANCELLATION=TRUE
 export OMP_NESTED=TRUE
