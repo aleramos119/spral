@@ -1,8 +1,16 @@
 ## Dependencies
-### METIS
-First, compile the [COIN-OR version of METIS](https://github.com/coin-or-tools/ThirdParty-Metis), e.g.,
+### Software Directory
+First, create a directory where the dependencies will be compiled, e.g.,
 ```bash
-git clone git@github.com:coin-or-tools/ThirdParty-Metis.git
+mkdir -p ${HOME}/Software
+```
+The remainder of this guide assumes such a directory has been created.
+
+### METIS
+Next, compile the [COIN-OR version of METIS](https://github.com/coin-or-tools/ThirdParty-Metis), e.g.,
+```bash
+cd ${HOME}/Software
+git clone https://github.com/coin-or-tools/ThirdParty-Metis.git
 cd ThirdParty-Metis && ./get.Metis
 mkdir build && cd build
 ../configure --prefix=${PWD}
@@ -28,7 +36,7 @@ This is the library used throughout the remainder of this guide.
 ### CUDA (optional)
 If you're installing with [NVIDIA CUDA](https://developer.nvidia.com/cuda-downloads) GPU support, ensure it is installed and that the following environment variables are set:
 ```
-export CUDA_HOME="/path/to/cuda" # CHANGE THIS TO YOUR SYSTEM-SPECIFIC PATH!
+export CUDA_HOME="/usr/local/cuda" # Change this to your system-specific path.
 export PATH="${PATH}:${CUDA_HOME}/bin"
 export LIBRARY_PATH="${LIBRARY_PATH}:${CUDA_HOME}/lib64"
 export LD_LIBRARY_PATH="${LD_LIBRARY_PATH}:${CUDA_HOME}/lib64"
@@ -41,7 +49,9 @@ export NVCC_INCLUDE_FLAGS="${NVCC_INCLUDE_FLAGS}:-I${CUDA_HOME}/include"
 ### Multicore CPUs Only
 To compile with only multicore CPU support, execute
 ```bash
-mkdir build
+cd ${HOME}/Software
+git clone https://github.com/lanl-ansi/spral.git
+cd spral && mkdir build
 ./autogen.sh # If compiling from scratch.
 CFLAGS=-fPIC CPPFLAGS=-fPIC CXXFLAGS=-fPIC FFLAGS=-fPIC \
    FCFLAGS=-fPIC ./configure --prefix=${PWD}/build \
@@ -54,7 +64,9 @@ make && make install
 ### Multicore CPUs and NVIDIA GPUs (optional)
 To compile with multicore CPU and NVIDIA GPU support, execute
 ```bash
-mkdir build
+cd ${HOME}/Software
+git clone https://github.com/lanl-ansi/spral.git
+cd spral && mkdir build
 ./autogen.sh # If compiling from scratch.
 CFLAGS=-fPIC CPPFLAGS=-fPIC CXXFLAGS=-fPIC FFLAGS=-fPIC \
    FCFLAGS=-fPIC NVCCFLAGS="-shared -Xcompiler -fPIC" \
@@ -72,6 +84,7 @@ For future use, set the SPRAL directory environment variable via
 ```bash
 export SPRALDIR=${PWD}/build
 ```
+from the `${HOME}/Software/spral` directory.
 Also, ensure the following environment variables are set when using the library:
 ```bash
 export OMP_CANCELLATION=TRUE
