@@ -12,7 +12,8 @@ Next, compile the [COIN-OR version of METIS](https://github.com/coin-or-tools/Th
 cd ${HOME}/Software
 git clone https://github.com/coin-or-tools/ThirdParty-Metis.git
 cd ThirdParty-Metis && ./get.Metis
-mkdir build && cd build
+mkdir build
+cd build
 ../configure --prefix=${PWD}
 make && make install
 export METISDIR=${PWD}
@@ -51,7 +52,8 @@ To compile with only multicore CPU support, execute
 ```bash
 cd ${HOME}/Software
 git clone https://github.com/lanl-ansi/spral.git
-cd spral && mkdir build
+cd spral
+mkdir build
 ./autogen.sh # If compiling from scratch.
 CFLAGS=-fPIC CPPFLAGS=-fPIC CXXFLAGS=-fPIC FFLAGS=-fPIC \
    FCFLAGS=-fPIC ./configure --prefix=${PWD}/build \
@@ -66,7 +68,8 @@ To compile with multicore CPU and NVIDIA GPU support, execute
 ```bash
 cd ${HOME}/Software
 git clone https://github.com/lanl-ansi/spral.git
-cd spral && mkdir build
+cd spral
+mkdir build
 ./autogen.sh # If compiling from scratch.
 CFLAGS=-fPIC CPPFLAGS=-fPIC CXXFLAGS=-fPIC FFLAGS=-fPIC \
    FCFLAGS=-fPIC NVCCFLAGS="-shared -Xcompiler -fPIC" \
