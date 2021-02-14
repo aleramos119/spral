@@ -59,7 +59,7 @@ CFLAGS=-fPIC CPPFLAGS=-fPIC CXXFLAGS=-fPIC FFLAGS=-fPIC \
    FCFLAGS=-fPIC ./configure --prefix=${PWD}/build \
    --with-blas="-lopenblas" --with-lapack="-llapack" \
    --with-metis="-L${METISDIR}/lib -lcoinmetis" \
-   --with-metis-inc-dir="-I${METISDIR}/include/coin-or/metis"
+   --with-metis-inc-dir="${METISDIR}/include/coin-or/metis"
 make && make install
 ```
 
@@ -76,7 +76,7 @@ CFLAGS=-fPIC CPPFLAGS=-fPIC CXXFLAGS=-fPIC FFLAGS=-fPIC \
    ./configure --prefix=${PWD}/build \
    --with-blas="-lopenblas" --with-lapack="-llapack" \
    --with-metis="-L${METISDIR}/lib -lcoinmetis" \
-   --with-metis-inc-dir="-I${METISDIR}/include/coin-or/metis"
+   --with-metis-inc-dir="${METISDIR}/include/coin-or/metis"
 make && make install
 ```
 If your GPUs are not being recognized, consider uncommenting line 91 and commenting line 92 of `src/hw_topology/hwloc_wrapper.hxx`, then recompiling.
