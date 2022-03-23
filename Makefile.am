@@ -5,7 +5,7 @@ SUFFIXES = .cu
 
 # NVCC setup
 PTX_FLAGS = -v
-#NVCCFLAGS = -Iinclude -arch=sm_20 -g -Xptxas="${PTX_FLAGS}"
+NVCCFLAGS = -Iinclude -arch=sm_35 -g -Xptxas="${PTX_FLAGS}"
 OPENMP_LIB = -lgomp # FIXME: autoconf this
 AM_NVCC_FLAGS = -I$(top_srcdir)/include -I$(top_srcdir)/src
 AM_LD_FLAGS = -lcuda
